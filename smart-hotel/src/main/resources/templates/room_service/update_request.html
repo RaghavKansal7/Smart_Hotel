@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Update Room Service Request</title>
+    <style>
+        body {
+            background: #f7f9fc;
+            font-family: 'Segoe UI', sans-serif;
+            padding: 40px;
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px 40px;
+            max-width: 600px;
+            margin: auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2c3e50;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        input[type="text"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        input[readonly],
+        textarea[readonly] {
+            background-color: #f0f0f0;
+            color: #555;
+        }
+
+        button {
+            padding: 12px 25px;
+            background-color: #007BFF;
+            color: white;
+            font-size: 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            display: block;
+            margin: auto;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Update Room Service Request</h2>
+    <form th:action="@{/room-service/update}" th:object="${request}" method="post">
+        <input type="hidden" th:field="*{id}" />
+
+        <label>Room Number:</label>
+        <input type="text" th:field="*{roomNumber}" readonly />
+
+        <label>Service Type:</label>
+        <input type="text" th:field="*{serviceType}" readonly />
+
+        <label>Description:</label>
+        <textarea th:field="*{description}" rows="3" readonly></textarea>
+
+        <label>Status:</label>
+        <select th:field="*{status}" required>
+            <option value="Pending">Pending</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+        </select>
+
+        <button type="submit">Update Status</button>
+    </form>
+</div>
+</body>
+</html>

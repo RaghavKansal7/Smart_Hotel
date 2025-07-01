@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Food Items</title>
+</head>
+<body>
+<h2>Food Items</h2>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Item Name</th>
+        <th>Price</th>
+        <th>Room Number</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+    <tr th:each="food : ${foodList}">
+        <td th:text="${food.id}">1</td>
+        <td th:text="${food.itemName}">Item</td>
+        <td th:text="${food.price}">100</td>
+        <td th:text="${food.roomNumber}">101</td>
+        <td th:text="${food.status}">Making</td>
+        <td><a th:href="@{/food/delete/{id}(id=${food.id})}">Delete</a></td>
+    </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Guest Check-In</title>
+</head>
+<body style="font-family:sans-serif; background:#f5f5f5; padding:40px;">
+<h2 style="text-align:center;">Guest Check-In Form</h2>
+
+<div th:if="${errorMessage}" style="color:red; text-align:center; margin-bottom:20px;">
+    <p th:text="${errorMessage}"></p>
+</div>
+
+<form th:action="@{/checkin/save}" th:object="${checkIn}" method="post"
+      style="background:white; max-width:500px; margin:auto; padding:20px; border-radius:8px; box-shadow:0 0 10px #ccc;">
+    <label>Guest Name:</label>
+    <input type="text" th:field="*{guestName}" required style="width:100%; padding:10px; margin-bottom:15px;" />
+
+    <label>Room Number:</label>
+    <input type="text" th:field="*{roomNumber}" required style="width:100%; padding:10px; margin-bottom:15px;" />
+
+    <button type="submit" style="padding:10px 20px; background-color:#007bff; color:white; border:none; border-radius:4px;">Check In</button>
+</form>
+</body>
+</html>

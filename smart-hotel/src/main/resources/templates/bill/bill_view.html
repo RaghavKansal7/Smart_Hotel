@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Invoice</title></head>
+<body style="font-family:sans-serif; background:#f3f3f3; padding:30px;">
+<div style="background:white; max-width:600px; margin:auto; padding:30px; border-radius:8px; box-shadow:0 0 10px #ccc;">
+    <h2 style="text-align:center;">Hotel Invoice</h2>
+    <hr>
+    <p><strong>Guest Name:</strong> <span th:text="${bill.guestName}"></span></p>
+    <p><strong>Room Number:</strong> <span th:text="${bill.roomNumber}"></span></p>
+    <p><strong>Check-In Date:</strong> <span th:text="${bill.checkInDate}"></span></p>
+    <p><strong>Check-Out Date:</strong> <span th:text="${bill.checkOutDate}"></span></p>
+    <hr>
+    <p><strong>Room Charges:</strong> ₹<span th:text="${bill.roomCharges}"></span></p>
+    <p><strong>Food Charges:</strong> ₹<span th:text="${bill.foodCharges}"></span></p>
+    <h3>Total: ₹<span th:text="${bill.totalAmount}"></span></h3>
+    <hr>
+    <p style="text-align:center;">Thank you for staying with us!</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<h2>Food Items</h2>
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Available</th>
+        <th>Actions</th>
+    </tr>
+    <tr th:each="food : ${foodList}">
+        <td th:text="${food.name}"></td>
+        <td th:text="${food.price}"></td>
+        <td th:text="${food.available}"></td>
+        <td>
+            <a th:href="@{'/food/update/' + ${food.id}}">Update</a> |
+            <a th:href="@{'/food/delete/' + ${food.id}}" onclick="return confirm('Are you sure?')">Delete</a>
+        </td>
+    </tr>
+</table>

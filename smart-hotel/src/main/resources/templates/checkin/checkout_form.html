@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Check-Out</title></head>
+<body>
+<h2>Confirm Checkout</h2>
+<p>Guest: <span th:text="${checkIn.guestName}"></span></p>
+<p>Room: <span th:text="${checkIn.roomNumber}"></span></p>
+<form th:action="@{/checkin/checkout}" method="post">
+    <input type="hidden" th:name="id" th:value="${checkIn.id}" />
+    <button type="submit">Confirm Check Out</button>
+</form>
+</body>
+</html>
