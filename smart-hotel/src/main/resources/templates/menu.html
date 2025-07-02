@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Menu</title></head>
+<body>
+<h2>Hotel Menu</h2>
+<table border="1">
+    <tr>
+        <th>Dish Name</th>
+        <th>Price</th>
+    </tr>
+    <tr th:each="item : ${foodItems}">
+        <td th:text="${item.itemName}">Paneer Butter Masala</td>
+        <td th:text="${item.price}">250</td>
+    </tr>
+</table>
+<a th:href="@{/customer/home}">Back to Home</a>
+</body>
+</html>

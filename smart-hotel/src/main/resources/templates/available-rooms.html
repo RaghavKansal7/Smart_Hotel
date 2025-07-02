@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Available Room Types</title>
+</head>
+<body>
+<h2>Available Room Types</h2>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>Room Type</th>
+        <th>Price (per night)</th>
+        <th>Book</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="room : ${rooms}">
+        <td th:text="${room.type}">Room Type</td>
+        <td th:text="${room.price}">Price</td>
+        <td>
+            <form th:action="@{/customer/book}" method="post">
+                <input type="hidden" name="roomNumber" th:value="${room.roomNumber}" />
+                <label>
+                    <input type="date" name="checkInDate" th:min="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" required />
+                </label>
+                <button type="submit">Book</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<a href="/">Back to Home</a>
+</body>
+</html>

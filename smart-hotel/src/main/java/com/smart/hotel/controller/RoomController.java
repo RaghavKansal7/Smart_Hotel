@@ -2,10 +2,14 @@ package com.smart.hotel.controller;
 
 import com.smart.hotel.entity.Room;
 import com.smart.hotel.service.RoomService;
+import com.smart.hotel.service.impl.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
+import java.time.LocalDate;
 
 @Controller
 @RequestMapping("/rooms")
@@ -13,6 +17,14 @@ public class RoomController {
 
     @Autowired
     private RoomService roomService;
+    @Autowired
+    private BookingService bookingService;
+    @PostMapping("book")
+    public String bookRoom(@RequestParam String roomId, Principal principal) {
+        String username = principal.getName(); // get logged-in user
+        bookingService.bookRoom(roomId, LocalDate.parse(username)); // handle booking logic
+        return "redirect:/booking/confirmation";
+    }
 
     @GetMapping
     public String viewRooms(Model model) {
