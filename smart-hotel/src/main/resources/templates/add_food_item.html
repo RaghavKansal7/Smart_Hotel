@@ -1,27 +1,126 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>Add Food Item</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            padding: 50px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .form-box {
+            background-color: #ffffff;
+            padding: 40px 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            max-width: 450px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        label {
+            display: block;
+            margin: 12px 0 6px;
+            font-weight: 500;
+            color: #444;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            font-size: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            border-color: #007bff;
+            background-color: #fff;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 24px;
+            background-color: #007bff;
+            color: white;
+            font-size: 16px;
+            font-weight: 500;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            transform: translateY(-1px);
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 18px;
+            color: #007bff;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-<h2>Add Food Item</h2>
-<form th:action="@{/food/save}" method="post" th:object="${food}">
-    <label>Item Name:</label>
-    <input type="text" th:field="*{itemName}" required /><br>
 
-    <label>Price:</label>
-    <input type="number" step="0.01" th:field="*{price}" required /><br>
+<div class="form-box">
+    <h2>🍽️ Add Food Item</h2>
 
-    <label>Room Number:</label>
-    <input type="text" th:field="*{roomNumber}" required /><br>
+    <form th:action="@{/food/save}" th:object="${food}" method="post">
+        <label for="itemName">Item Name</label>
+        <input type="text" id="itemName" th:field="*{itemName}" placeholder="Enter item name" required>
 
-    <label>Status:</label>
-    <select th:field="*{status}">
-        <option value="Making">Making</option>
-        <option value="Delivered">Delivered</option>
-    </select><br>
+        <label for="price">Price</label>
+        <input type="number" id="price" th:field="*{price}" placeholder="Enter price" min="0" required>
 
-    <button type="submit">Add Food</button>
-</form>
+        <label for="roomNumber">Room Number</label>
+        <input type="number" id="roomNumber" th:field="*{roomNumber}" placeholder="Enter room number" required>
+
+        <label for="status">Status</label>
+        <select id="status" th:field="*{status}" required>
+            <option value="" disabled selected>Select status</option>
+            <option value="Making">Making</option>
+            <option value="Delivered">Delivered</option>
+        </select>
+
+        <button type="submit">Add Food Item</button>
+    </form>
+
+    <a class="back-link" th:href="@{/dashboard}">← Back to Dashboard</a>
+</div>
+
 </body>
 </html>

@@ -1,27 +1,105 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>Food Items</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fb;
+            padding: 40px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+        }
+
+        th, td {
+            padding: 14px 16px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f4f7;
+        }
+
+        tr:hover {
+            background-color: #e8f0fe;
+        }
+
+        a.delete-btn {
+            color: white;
+            background-color: #dc3545;
+            padding: 6px 12px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        a.delete-btn:hover {
+            background-color: #bd2130;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+    </style>
 </head>
 <body>
-<h2>Food Items</h2>
-<table border="1">
-    <tr>
-        <th>ID</th>
-        <th>Item Name</th>
-        <th>Price</th>
-        <th>Room Number</th>
-        <th>Status</th>
-        <th>Action</th>
-    </tr>
-    <tr th:each="food : ${foodList}">
-        <td th:text="${food.id}">1</td>
-        <td th:text="${food.itemName}">Item</td>
-        <td th:text="${food.price}">100</td>
-        <td th:text="${food.roomNumber}">101</td>
-        <td th:text="${food.status}">Making</td>
-        <td><a th:href="@{/food/delete/{id}(id=${food.id})}">Delete</a></td>
-    </tr>
-</table>
+
+<div class="container">
+    <h2>🍽️ Food Items</h2>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Item Name</th>
+            <th>Price</th>
+            <th>Room Number</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="food : ${foodList}">
+            <td th:text="${food.id}">1</td>
+            <td th:text="${food.itemName}">Item</td>
+            <td th:text="${food.price}">100</td>
+            <td th:text="${food.roomNumber}">101</td>
+            <td th:text="${food.status}">Making</td>
+            <td>
+                <a th:href="@{/food/delete/{id}(id=${food.id})}" class="delete-btn">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
 </body>
 </html>

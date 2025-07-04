@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Receptionist Dashboard</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #f4f6f8;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .container {
+            background-color: #fff;
+            width: 100%;
+            max-width: 480px;
+            padding: 40px 30px;
+            border-radius: 16px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.06);
+            text-align: center;
+        }
+
+        .header {
+            margin-bottom: 35px;
+        }
+
+        .header h2 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .header p {
+            font-size: 14px;
+            color: #777;
+            margin-top: 8px;
+        }
+
+        .button {
+            display: block;
+            width: 100%;
+            margin: 12px 0;
+            padding: 14px 16px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.1);
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .button:active {
+            transform: scale(0.98);
+        }
+
+        .footer {
+            margin-top: 25px;
+            font-size: 13px;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h2>Welcome, Receptionist 👋</h2>
+        <p>Manage bookings, food orders, and billing from one place</p>
+    </div>
+
+    <a class="button" th:href="@{/checkin/list}">🛎️ Check-In / Check-Out</a>
+    <a class="button" th:href="@{/rooms}">🛏️ View/Add Rooms</a>
+    <a class="button" th:href="@{/food/add}">🍽️ View/Add Food Items</a>
+    <a class="button" th:href="@{/bills}">🧾 View All Bills</a>
+    <a class="button" th:href="@{/logout}">🚪 Logout</a>
+
+    <div class="footer">
+        &copy; 2025 Smart Hotel System
+    </div>
+</div>
+
+</body>
+</html>

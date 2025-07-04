@@ -1,20 +1,77 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head><title>Invoice</title></head>
-<body style="font-family:sans-serif; background:#f3f3f3; padding:30px;">
-<div style="background:white; max-width:600px; margin:auto; padding:30px; border-radius:8px; box-shadow:0 0 10px #ccc;">
-    <h2 style="text-align:center;">Hotel Invoice</h2>
-    <hr>
-    <p><strong>Guest Name:</strong> <span th:text="${bill.guestName}"></span></p>
-    <p><strong>Room Number:</strong> <span th:text="${bill.roomNumber}"></span></p>
-    <p><strong>Check-In Date:</strong> <span th:text="${bill.checkInDate}"></span></p>
-    <p><strong>Check-Out Date:</strong> <span th:text="${bill.checkOutDate}"></span></p>
-    <hr>
-    <p><strong>Room Charges:</strong> ₹<span th:text="${bill.roomCharges}"></span></p>
-    <p><strong>Food Charges:</strong> ₹<span th:text="${bill.foodCharges}"></span></p>
-    <h3>Total: ₹<span th:text="${bill.totalAmount}"></span></h3>
-    <hr>
-    <p style="text-align:center;">Thank you for staying with us!</p>
+<head>
+    <meta charset="UTF-8">
+    <title>Bill Summary</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f5f5f5;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .container {
+            background-color: white;
+            max-width: 500px;
+            margin: auto;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .line {
+            margin: 10px 0;
+            font-size: 16px;
+            color: #444;
+        }
+
+        .total {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+            margin-top: 20px;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 25px;
+            text-decoration: none;
+            color: white;
+            background: #007bff;
+            padding: 10px 20px;
+            border-radius: 8px;
+        }
+
+        a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>🧾 Final Bill</h2>
+
+    <div class="line">Guest Name: <b th:text="${bill.guestName}">Guest</b></div>
+    <div class="line">Room Number: <b th:text="${bill.roomNumber}">101</b></div>
+    <div class="line">Check-In Date: <b th:text="${bill.checkInDate}">2025-07-01</b></div>
+    <div class="line">Check-Out Date: <b th:text="${bill.checkOutDate}">2025-07-02</b></div>
+
+    <hr/>
+
+    <div class="line">Room Charges: ₹ <span th:text="${bill.roomCharges}">1500</span></div>
+    <div class="line">Food Charges: ₹ <span th:text="${bill.foodCharges}">300</span></div>
+
+    <div class="total">Total Amount: ₹ <span th:text="${bill.totalAmount}">1800</span></div>
+
+    <a th:href="@{/bills}">← Back to All Bills</a>
 </div>
+
 </body>
 </html>

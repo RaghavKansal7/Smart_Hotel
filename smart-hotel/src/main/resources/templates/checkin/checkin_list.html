@@ -1,28 +1,58 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head><title>Check-In List</title></head>
-<body>
-<h2>Checked-In Guests</h2>
-<a href="/checkin/form">Add Check-In</a>
-<table border="1">
+<head>
+    <title>Check-In Management</title>
+</head>
+<body style="font-family:sans-serif; background-color:#f4f4f4; padding: 20px;">
+
+<h2>New Guest Check-In</h2>
+<form action="#" th:action="@{/checkin/add}" th:object="${checkin}" method="post">
+    <label>Guest Name:</label>
+    <input type="text" th:field="*{guestName}" required />
+    <br><br>
+
+    <label>Room Number:</label>
+    <input type="text" th:field="*{roomNumber}" required />
+    <br><br>
+
+    <button type="submit">Check-In</button>
+</form>
+
+<hr><br>
+
+<h2>All Check-Ins</h2>
+<table border="1" cellpadding="10" cellspacing="0" style="background:white;">
+    <thead style="background:#ddd;">
     <tr>
-        <th>Guest</th>
-        <th>Room</th>
-        <th>Check-In</th>
-        <th>Check-Out</th>
+        <th>ID</th>
+        <th>Guest Name</th>
+        <th>Room Number</th>
+        <th>Check-In Date</th>
+        <th>Check-Out Date</th>
         <th>Status</th>
-        <th>Actions</th>
+        <th>Action</th>
     </tr>
-    <tr th:each="ci : ${checkIns}">
-        <td th:text="${ci.guestName}"></td>
-        <td th:text="${ci.roomNumber}"></td>
-        <td th:text="${ci.checkInDate}"></td>
-        <td th:text="${ci.checkOutDate}">-</td>
-        <td th:text="${ci.status}"></td>
+    </thead>
+    <tbody>
+    <tr th:each="checkin : ${checkins}">
+        <td th:text="${checkin.id}">ID</td>
+        <td th:text="${checkin.guestName}">Guest Name</td>
+        <td th:text="${checkin.roomNumber}">Room Number</td>
+        <td th:text="${checkin.checkInDate}">Check-In Date</td>
+        <td th:text="${checkin.checkOutDate}">Check-Out Date</td>
+        <td th:text="${checkin.status}">Status</td>
         <td>
-            <a th:href="@{'/checkin/checkout/' + ${ci.id}}" th:if="${ci.status == 'Checked In'}">Check Out</a>
+            <!-- Show "Check Out" button if guest is still checked in -->
+            <a th:if="${checkin.status == 'Checked In'}"
+               th:href="@{'/checkin/checkout/' + ${checkin.id}}">Check Out</a>
+
+            <!-- Show "Generate Bill" if guest is checked out -->
+            <a th:if="${checkin.status == 'Checked Out'}"
+               th:href="@{'/bill/generate/' + ${checkin.id}}">Generate Bill</a>
         </td>
     </tr>
+    </tbody>
 </table>
+
 </body>
 </html>

@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/checkin")
 public class CheckInController {
@@ -14,39 +16,25 @@ public class CheckInController {
     @Autowired
     private CheckInService checkInService;
 
-    @GetMapping("/form")
-    public String showCheckInForm(Model model) {
-        model.addAttribute("checkIn", new CheckIn());
-        return "checkin/checkin_form";
-    }
-
-    @PostMapping("/save")
-    public String checkIn(@ModelAttribute CheckIn checkIn, Model model) {
-        try {
-            checkInService.checkInGuest(checkIn);
-            return "redirect:/checkin/list";
-        } catch (IllegalStateException e) {
-            model.addAttribute("errorMessage", e.getMessage());
-            model.addAttribute("checkIn", checkIn);
-            return "checkin/checkin_form";
-        }
-    }
-
-
+    // Display form and list
     @GetMapping("/list")
-    public String listCheckIns(Model model) {
-        model.addAttribute("checkIns", checkInService.getAllCheckIns());
+    public String showCheckInList(Model model) {
+        model.addAttribute("checkin", new CheckIn()); // for form
+        List<CheckIn> checkIns = checkInService.getAllCheckIns(); // for table
+        model.addAttribute("checkins", checkIns);
         return "checkin/checkin_list";
     }
 
-    @GetMapping("/checkout/{id}")
-    public String showCheckoutForm(@PathVariable Long id, Model model) {
-        model.addAttribute("checkIn", checkInService.getCheckInById(id));
-        return "checkin/checkout_form";
+    // Handle form submission
+    @PostMapping("/add")
+    public String addCheckIn(@ModelAttribute("checkin") CheckIn checkIn) {
+        checkInService.checkInGuest(checkIn); // sets date + status internally
+        return "redirect:/checkin/list";
     }
 
-    @PostMapping("/checkout")
-    public String checkOut(@RequestParam Long id) {
+    // Checkout guest
+    @GetMapping("/checkout/{id}")
+    public String checkout(@PathVariable Long id) {
         checkInService.checkOutGuest(id);
         return "redirect:/checkin/list";
     }

@@ -34,22 +34,36 @@ public class BillServiceImpl implements BillService {
         bill.setCheckInDate(checkIn.getCheckInDate());
         bill.setCheckOutDate(checkIn.getCheckOutDate());
 
+        // Calculate number of days
         long days = ChronoUnit.DAYS.between(checkIn.getCheckInDate(), checkIn.getCheckOutDate());
         if (days <= 0) days = 1;
 
+        // Get room price
         Room room = roomRepo.findByRoomNumber(checkIn.getRoomNumber());
-        double roomRate = room != null ? room.getPrice() : 1500;
+        double roomRate = (room != null) ? room.getPrice() : 1500;
         double roomCharges = roomRate * days;
 
+        // Get food charges
         List<FoodItem> foodItems = foodRepo.findByRoomNumber(checkIn.getRoomNumber());
         double foodCharges = foodItems.stream()
                 .mapToDouble(FoodItem::getPrice)
                 .sum();
 
+        // Total
         bill.setRoomCharges(roomCharges);
         bill.setFoodCharges(foodCharges);
         bill.setTotalAmount(roomCharges + foodCharges);
 
         return billRepo.save(bill);
+    }
+
+    @Override
+    public List<Bill> getAllBills() {
+        return billRepo.findAll();
+    }
+
+    @Override
+    public Bill getBillById(Long id) {
+        return billRepo.findById(id).orElse(null);
     }
 }
