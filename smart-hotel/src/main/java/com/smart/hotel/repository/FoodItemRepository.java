@@ -6,5 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface FoodItemRepository extends JpaRepository<FoodItem, Long> {
-    List<FoodItem> findByRoomNumber(String roomNumber);  // ✅ correct method
+    List<FoodItem> findByRoomNumber(String roomNumber);
+    List<FoodItem> findByRoomNumberAndStatus(String roomNumber, String status); // ✅ added
 }

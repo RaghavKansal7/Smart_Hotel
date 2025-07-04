@@ -1,29 +1,45 @@
 package com.smart.hotel.controller;
 
+import com.smart.hotel.entity.User;
+import com.smart.hotel.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
+import java.util.Collections;
 
 @Controller
 public class LoginController {
 
     @Autowired
-    private AuthenticationManager authenticationManager;
+    private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping("/login")
     public String loginPage(@RequestParam(value = "error", required = false) String error,
                             @RequestParam(value = "logout", required = false) String logout,
+                            @RequestParam(value = "registered", required = false) String registered,
                             Model model) {
-        if (error != null) model.addAttribute("error", "Invalid username or password.");
-        if (logout != null) model.addAttribute("message", "You have been logged out.");
+
+        if (error != null) {
+            model.addAttribute("error", "Invalid username or password.");
+        }
+        if (logout != null) {
+            model.addAttribute("message", "You have been logged out successfully.");
+        }
+        if (registered != null) {
+            model.addAttribute("message", "✅ Registration successful. Please log in.");
+        }
+
         return "login";
     }
 
@@ -32,24 +48,28 @@ public class LoginController {
                         @RequestParam String password,
                         Model model,
                         HttpServletRequest request) {
-        try {
-            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
-            Authentication auth = authenticationManager.authenticate(token);
 
-            if (auth.isAuthenticated()) {
-                // ✅ This step is important: manually set authentication in the security context
-                SecurityContextHolder.getContext().setAuthentication(auth);
+        Optional<User> optionalUser = userRepository.findByUsername(username);
 
-                // ✅ Save context to session
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+
+            if (passwordEncoder.matches(password, user.getPassword())) {
+                // manually authenticate
+                UsernamePasswordAuthenticationToken authToken =
+                        new UsernamePasswordAuthenticationToken(username, password, Collections.emptyList());
+
+                SecurityContextHolder.getContext().setAuthentication(authToken);
+
                 HttpSession session = request.getSession(true);
                 session.setAttribute("SPRING_SECURITY_CONTEXT", SecurityContextHolder.getContext());
 
                 return "redirect:/dashboard";
             }
-        } catch (AuthenticationException e) {
-            model.addAttribute("error", "Invalid username or password.");
         }
 
+        model.addAttribute("error", "Invalid username or password.");
         return "login";
     }
+
 }

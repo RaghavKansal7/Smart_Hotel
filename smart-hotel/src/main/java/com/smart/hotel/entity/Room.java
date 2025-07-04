@@ -17,6 +17,7 @@ public class Room {
 
     private boolean available;
 
+
     // Getters & Setters
     public Long getId() {
         return id;

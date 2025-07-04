@@ -83,13 +83,13 @@
 
 <div class="container">
     <div class="header">
-        <h2>Welcome, Receptionist 👋</h2>
+        <h2 th:text="'Welcome, ' + ${#authentication.name} + ' 👋'">Welcome, Receptionist 👋</h2>
         <p>Manage bookings, food orders, and billing from one place</p>
     </div>
 
-    <a class="button" th:href="@{/checkin/list}">🛎️ Check-In / Check-Out</a>
-    <a class="button" th:href="@{/rooms}">🛏️ View/Add Rooms</a>
-    <a class="button" th:href="@{/food/add}">🍽️ View/Add Food Items</a>
+    <a class="button" th:href="@{/checkin/list}">🛎 Check-In / Check-Out</a>
+    <a class="button" th:href="@{/rooms}">🛏 View/Add Rooms</a>
+    <a class="button" th:href="@{/food/add}">🍽 View/Add Food Items</a>
     <a class="button" th:href="@{/bills}">🧾 View All Bills</a>
     <a class="button" th:href="@{/logout}">🚪 Logout</a>
 

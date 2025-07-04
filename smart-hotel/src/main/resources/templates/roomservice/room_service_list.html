@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Room Service Management</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f6f8;
+            padding: 40px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        form {
+            max-width: 500px;
+            margin: auto;
+            background: #fff;
+            padding: 25px 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 15px;
+            color: #555;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 12px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            width: 90%;
+            margin: 40px auto;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 10px #ccc;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<h2>🧹 Room Service Management</h2>
+
+<form th:action="@{/roomservice/save}" th:object="${roomServiceRequest}" method="post">
+    <input type="hidden" th:field="*{id}" />
+
+    <label>Room Number:</label>
+    <select th:field="*{roomNumber}" required>
+        <option value="" disabled selected>Select Room</option>
+        <option th:each="room : ${activeRooms}" th:value="${room}" th:text="${room}">101</option>
+    </select>
+
+    <label>Service Type:</label>
+    <input type="text" th:field="*{serviceType}" placeholder="e.g., Cleaning, Towel Replacement" required />
+
+    <label>Description:</label>
+    <textarea th:field="*{description}" rows="3" placeholder="Optional description..."></textarea>
+
+    <label>Status:</label>
+    <select th:field="*{status}" required>
+        <option value="Pending">Pending</option>
+        <option value="In Progress">In Progress</option>
+        <option value="Completed">Completed</option>
+    </select>
+
+    <button type="submit">Save Service Request</button>
+</form>
+
+<!-- Table to display all requests -->
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Room</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Status</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="req : ${requests}">
+        <td th:text="${req.id}">1</td>
+        <td th:text="${req.roomNumber}">101</td>
+        <td th:text="${req.serviceType}">Cleaning</td>
+        <td th:text="${req.description}">Change towels</td>
+        <td th:text="${req.status}">Pending</td>
+        <td>
+            <a th:href="@{/roomservice/edit/{id}(id=${req.id})}">Edit</a> |
+            <a th:href="@{/roomservice/delete/{id}(id=${req.id})}" onclick="return confirm('Are you sure?')">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a class="back-link" th:href="@{/dashboard}">← Back to Dashboard</a>
+
+</body>
+</html>

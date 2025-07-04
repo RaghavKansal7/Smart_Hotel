@@ -6,13 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class DashboardController {
 
-    @GetMapping("/")
-    public String homeRedirect() {
-        return "redirect:/dashboard";
-    }
-
     @GetMapping("/dashboard")
-    public String showDashboard() {
+    public String dashboard() {
         return "dashboard";
     }
 }

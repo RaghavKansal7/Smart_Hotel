@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface CheckInRepository extends JpaRepository<CheckIn, Long> {
     List<CheckIn> findByRoomNumberAndStatus(String roomNumber, String status);
+    List<CheckIn> findByStatus(String status);
+
 }

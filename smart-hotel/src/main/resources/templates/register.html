@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Receptionist Registration</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #eef2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 30px;
+        }
+
+        .register-box {
+            background-color: #fff;
+            padding: 40px 30px;
+            border-radius: 16px;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06);
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+        }
+
+        .register-box h2 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 25px;
+            color: #333;
+        }
+
+        .register-box label {
+            float: left;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .register-box input[type="text"],
+        .register-box input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        .register-box button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .register-box button:hover {
+            background-color: #218838;
+        }
+
+        .message, .error {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .error {
+            color: red;
+        }
+
+        .message {
+            color: green;
+        }
+
+        .login-link {
+            margin-top: 18px;
+            font-size: 13px;
+        }
+
+        .login-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="register-box">
+    <h2>Create Receptionist Account</h2>
+
+    <form th:action="@{/register}" method="post">
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username" placeholder="Enter username" required />
+
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" placeholder="Enter password" required />
+
+        <button type="submit">Register</button>
+    </form>
+
+    <div th:if="${error}" class="error" th:text="${error}"></div>
+
+    <div class="login-link">
+        Already registered? <a th:href="@{/login}">Login here</a>
+    </div>
+</div>
+
+</body>
+</html>

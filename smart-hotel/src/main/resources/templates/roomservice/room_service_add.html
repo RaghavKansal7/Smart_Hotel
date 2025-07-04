@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Room Service Request</title>
+</head>
+<body>
+<h2>Add Room Service Request</h2>
+
+<form th:action="@{/roomservice/save}" th:object="${request}" method="post">
+    <label>Room Number:</label>
+    <select th:field="*{roomNumber}">
+        <option value="" disabled selected>Select Room</option>
+        <option th:each="room : ${roomNumbers}" th:value="${room}" th:text="${room}"></option>
+    </select><br><br>
+
+    <label>Service Type:</label>
+    <input type="text" th:field="*{serviceType}" required><br><br>
+
+    <label>Description:</label>
+    <textarea th:field="*{description}" rows="3" required></textarea><br><br>
+
+    <label>Status:</label>
+    <select th:field="*{status}" required>
+        <option value="Pending">Pending</option>
+        <option value="Completed">Completed</option>
+    </select><br><br>
+
+    <button type="submit">Submit Request</button>
+</form>
+
+<a th:href="@{/dashboard}">Back to Dashboard</a>
+</body>
+</html>

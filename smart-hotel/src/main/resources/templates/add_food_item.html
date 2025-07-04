@@ -106,8 +106,17 @@
         <label for="price">Price</label>
         <input type="number" id="price" th:field="*{price}" placeholder="Enter price" min="0" required>
 
-        <label for="roomNumber">Room Number</label>
-        <input type="number" id="roomNumber" th:field="*{roomNumber}" placeholder="Enter room number" required>
+        <label>Room Number:</label>
+        <label>Room Number:</label>
+        <select th:field="*{roomNumber}" required>
+            <option value="" disabled selected>Select Room</option>
+            <option th:each="room : ${activeRooms}"
+                    th:value="${room}"
+
+                    th:text="${room}">
+            </option>
+        </select>
+
 
         <label for="status">Status</label>
         <select id="status" th:field="*{status}" required>

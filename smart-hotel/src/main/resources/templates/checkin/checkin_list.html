@@ -2,27 +2,124 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Check-In Management</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f4f4;
+            padding: 40px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: auto;
+            background: #fff;
+            padding: 25px 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        label {
+            display: block;
+            margin-top: 12px;
+            font-weight: 600;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        button {
+            margin-top: 20px;
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            margin-top: 40px;
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 0 8px rgba(0,0,0,0.05);
+        }
+
+        th, td {
+            padding: 14px 16px;
+            border: 1px solid #e0e0e0;
+            text-align: center;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .back-link a {
+            color: #007bff;
+            font-size: 14px;
+        }
+    </style>
 </head>
-<body style="font-family:sans-serif; background-color:#f4f4f4; padding: 20px;">
+<body>
 
-<h2>New Guest Check-In</h2>
-<form action="#" th:action="@{/checkin/add}" th:object="${checkin}" method="post">
-    <label>Guest Name:</label>
-    <input type="text" th:field="*{guestName}" required />
-    <br><br>
+<h2>🛎️ New Guest Check-In</h2>
 
-    <label>Room Number:</label>
-    <input type="text" th:field="*{roomNumber}" required />
-    <br><br>
+<div class="form-container">
+    <form th:action="@{/checkin/add}" th:object="${checkin}" method="post">
+        <label>Guest Name:</label>
+        <input type="text" th:field="*{guestName}" required />
 
-    <button type="submit">Check-In</button>
-</form>
+        <label>Room Number (Type):</label>
+        <select th:field="*{roomNumber}" required>
+            <option value="" disabled selected>Select Room</option>
+            <option th:each="room : ${availableRooms}"
+                    th:value="${room.roomNumber}"
+                    th:text="${room.roomNumber + ' (' + room.type + ')'}">
+            </option>
+        </select>
 
-<hr><br>
+        <button type="submit">Check-In</button>
+    </form>
+</div>
 
-<h2>All Check-Ins</h2>
-<table border="1" cellpadding="10" cellspacing="0" style="background:white;">
-    <thead style="background:#ddd;">
+<h2>📋 All Check-Ins</h2>
+
+<table>
+    <thead>
     <tr>
         <th>ID</th>
         <th>Guest Name</th>
@@ -35,24 +132,25 @@
     </thead>
     <tbody>
     <tr th:each="checkin : ${checkins}">
-        <td th:text="${checkin.id}">ID</td>
-        <td th:text="${checkin.guestName}">Guest Name</td>
-        <td th:text="${checkin.roomNumber}">Room Number</td>
-        <td th:text="${checkin.checkInDate}">Check-In Date</td>
-        <td th:text="${checkin.checkOutDate}">Check-Out Date</td>
-        <td th:text="${checkin.status}">Status</td>
+        <td th:text="${checkin.id}">1</td>
+        <td th:text="${checkin.guestName}">John Doe</td>
+        <td th:text="${checkin.roomNumber}">101</td>
+        <td th:text="${checkin.checkInDate}">2025-07-02</td>
+        <td th:text="${checkin.checkOutDate}">2025-07-03</td>
+        <td th:text="${checkin.status}">Checked In</td>
         <td>
-            <!-- Show "Check Out" button if guest is still checked in -->
             <a th:if="${checkin.status == 'Checked In'}"
                th:href="@{'/checkin/checkout/' + ${checkin.id}}">Check Out</a>
-
-            <!-- Show "Generate Bill" if guest is checked out -->
             <a th:if="${checkin.status == 'Checked Out'}"
                th:href="@{'/bill/generate/' + ${checkin.id}}">Generate Bill</a>
         </td>
     </tr>
     </tbody>
 </table>
+
+<div class="back-link">
+    <a th:href="@{/dashboard}">← Back to Dashboard</a>
+</div>
 
 </body>
 </html>
